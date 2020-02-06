@@ -7,3 +7,4 @@ First setup a python3 virtualenv and activate it. After that install the require
 ```
 pip install -r requirements.txt
 ```
+We use Travis-CI for continuous integration in this project.
