@@ -3,11 +3,23 @@ TCD Group Project for AI
 
 We are using Python 3.6 in this project.
 
+If you use ```venv```, follow as below create a virtual env.
 Create python3 virtualenv and activate it.
 ```
-python -m venv <Virtul Env Name>
-source <Virtul Env Name>/bin/activate
+python -m venv <Virtual Env Name>
+source <Virtual Env Name>/bin/activate
 ```
+If you use ```conda```, follow as below to create the virtual env.
+```
+conda create -n <Virtual Env Name> python=3.6
+```
+
+Activate and Deactivate before and after working with the project.
+```
+conda activate <Virtual Env Name>
+conda deactivate
+```
+
 After that install the required packages using pip,
 ```
 pip install -r requirements.txt
