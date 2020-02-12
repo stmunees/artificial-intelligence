@@ -3,8 +3,10 @@ TCD Group Project for AI
 
 We are using Python 3.6 in this project.
 
-If you use ```venv```, follow as below create a virtual env.
-Create python3 virtualenv and activate it.
+Create a python3 virutal environemnt and activate it.
+
+If you use ```venv```, follow as below to create a virtual env.
+
 ```
 python -m venv <Virtual Env Name>
 source <Virtual Env Name>/bin/activate
