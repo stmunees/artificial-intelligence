@@ -27,5 +27,3 @@ After that install the required packages using pip,
 pip install -r requirements.txt
 ```
 We use Travis-CI for continuous integration in this project.
-
-Test
