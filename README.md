@@ -47,7 +47,7 @@ To install ``` git-latexdiff ``` follow the below instructions,
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Linux Users (Also make sure gcc is installed):
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;``` sudo apt-get install -y asciidoc ```
   
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mac Users:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mac Users (Make sure Homebrew is installed):
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;``` brew install asciidoc ```
 
 3. ```cd``` into the extracted folder and do,
