@@ -39,7 +39,7 @@ pip install -r requirements.txt
 
 To install ``` git-latexdiff ``` follow the below instructions,
 
-1. Extract the zip file, "git-latexdiff-master.zip" from this repository outside of the repository folder.
+1. Extract the zip file, *"git-latexdiff-master.zip"* from this repository outside of the repository folder.
 
 2. We need to install ``` git-latexdiff ``` in Git's exec-path using the make file.
    We need ``` asciidoc ``` to create the make file. Run the below commands to install the same.
