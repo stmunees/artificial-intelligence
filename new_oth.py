@@ -45,14 +45,16 @@ def print_board():
 
 
 
-def is_legal_move(black_move,'b',board):
-    
+def is_legal_move(move,player,board):
 
 
 
 
-if __name__ == '__main__':
+
+
+ if __name__ == '__main__':
     board = initial_board()
+    import pdb; pdb.set_trace()
     print(print_board())
     print('You are black, Black Plays First')
 
