@@ -58,6 +58,7 @@ def do_flips(player,i,j,board):
     x2 = int(j/10)
     y2 = j%10
 
+    count=0;
 
     if(x1<x2):
         xs = x1;xb=x2
@@ -72,13 +73,18 @@ def do_flips(player,i,j,board):
 
     if(x1==x2):
         for i in range(ys,yb):
-                board[int(str(x1)+str(i))] = player
+                if(board[int(str(x1)+str(i))]!=player):
+                    board[int(str(x1)+str(i))] = player
+                    count+=1
 
     elif(y1==y2):
         for i in range(xs,xb):
-                board[int(str(i)+str(y1))] = player
+                if(board[int(str(i)+str(y1))]!=player):
+                    board[int(str(i)+str(y1))] = player
+                    count+=1
 
     else:
+
             slope = (y2-y1)/(x2-x1)
             start  = ys;
             if(slope<0):
@@ -87,9 +93,11 @@ def do_flips(player,i,j,board):
                 a = xs;b=xb;incr = 1
 
             for k in range(a,b,incr):
-                if(start<=yb):
+                if(start<=yb and board[int(str(k)+str(start))]!=player):
                     board[int(str(k)+str(start))]=player
-                    start+=1
+                    count+=1
+                start+=1;
+    return count;
 
 
 def check_for_straight_line(a,b,opp):
@@ -101,9 +109,14 @@ def check_for_straight_line(a,b,opp):
     y1 = a%10;
     x2 = int(b/10)
     y2 = b%10;
+    #
+    # if(x1==3 and y1==6 and x2==1 and y2==4):
+    #     import pdb; pdb.set_trace()
 
     d1 = x2-x1
     d2 = y2-y1
+
+
     if( x1==x2 or y1==y2 or (abs(d1) == abs(d2))):
         for i in opp:
             x3 = int(i/10)
@@ -113,9 +126,47 @@ def check_for_straight_line(a,b,opp):
             len3 = math.sqrt((abs(x1-x2)**2) + (abs(y1-y2)**2))
             len4 = len1+len2;
             if(len4 == len3):
-                return True
-        return False
+                if(x1<x2):
+                    xs = x1;xb=x2
+                else:
+                    xs = x2;xb=x1
+                if(y1<y2):
+                    ys = y1;yb=y2
+                else:
+                    ys = y2;yb=y1
 
+
+                if(x1==x2):
+                    for i in range(ys+1,yb):
+                            if(board[int(str(x1)+str(i))]=='.'):
+                                return False
+
+                elif(y1==y2):
+                    for i in range(xs+1,xb):
+                            if(board[int(str(i)+str(y1))]=='.'):
+                                return False
+                else:
+                        # if(x1==3 and y1==6 and x2==1 and y2==4):
+                        #     import pdb; pdb.set_trace()
+                        slope = (y2-y1)/(x2-x1)
+                        start  = ys;
+                        if(slope<0):
+                            a = xb;b=xs;incr = -1
+                        else:
+                            a = xs;b=xb;incr = 1
+
+                        count =0;
+
+                        for k in range(a,b,incr):
+                            if(start<=yb and board[int(str(k)+str(start))]=='.'):
+                                count+=1
+                            start+=1;
+
+                        if(a==x2 and count<=1):
+                            return True
+                        if(count>0):
+                            return False
+                return True
 
 def get_empty_around_piece(piece,board):
     '''
@@ -174,8 +225,12 @@ def get_legal_moves(player,board):
 
 
 if __name__ == '__main__':
+    player_score = 2
+    comp_score = 2
     board = initial_board()
     print(print_board(board))
+    print("You: "+str(player_score)+"\tComputer: "+str(comp_score))
+
 
     while True:
             moves = get_legal_moves('@',board)#gets legal moves for the player
@@ -183,15 +238,25 @@ if __name__ == '__main__':
             move = int(input('Enter Choice:'))#accepts the choice from the player
             if (move in moves.keys()):
                 board[move] = '@';#puts players disk at chosen space
-                do_flips('@',move,moves[move],board)#flips opponent's pieces accordingly
+                player_score+=1
+                num = do_flips('@',move,moves[move],board)#flips opponent's pieces accordingly
+                print(num)
+                player_score+=num
+                comp_score-=num
                 print(print_board(board))
+                print("You: "+str(player_score)+"\tComputer: "+str(comp_score))
                 if(game_over(board)):#checks if game is over
                     exit();
             computer_moves = get_legal_moves('o',board)#gets legal moves for the computer
             a,b = computer_moves.popitem()#choses first legal move in the dictionary
             print("Move chosen:" + str(a))
             board[a] = 'o';
-            do_flips('o',a,b,board)
+            comp_score+=1
+            num = do_flips('o',a,b,board)
+            print(num)
+            player_score-=num
+            comp_score+=num
             print(print_board(board))
+            print("You: "+str(player_score)+"\tComputer: "+str(comp_score))
             if(game_over(board)):
                 exit();
