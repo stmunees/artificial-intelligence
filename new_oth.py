@@ -2,11 +2,31 @@
 Implements the Rules of Othello Game.
 '''
 import math
+from alphabetapruning import alphabeta
+
+SQUARE_WEIGHTS = [
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 120, -20, 20, 5, 5, 20, -20, 120, 0,
+    0, -20, -40, -5, -5, -5, -5, -40, -20, 0,
+    0, 20, -5, 15, 3, 3, 15, -5, 20, 0,
+    0, 5, -5, 3, 3, 3, 3, -5, 5, 0,
+    0, 5, -5, 3, 3, 3, 3, -5, 5, 0,
+    0, 20, -5, 15, 3, 3, 15, -5, 20, 0,
+    0, -20, -40, -5, -5, -5, -5, -40, -20, 0,
+    0, 120, -20, 20, 5, 5, 20, -20, 120, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+]
+
 EMPTY, BLACK, WHITE, OUTER = '.', '@', 'o', '?'
+PIECES = (EMPTY, BLACK, WHITE, OUTER)
+PLAYERS = {BLACK: 'Black', WHITE: 'White'}
 
 UP, DOWN, LEFT, RIGHT = -10, 10, -1, 1
 UP_RIGHT, DOWN_RIGHT, DOWN_LEFT, UP_LEFT = -9, 11, 9, -11
 DIRECTIONS = (UP, UP_RIGHT, RIGHT, DOWN_RIGHT, DOWN, DOWN_LEFT, LEFT, UP_LEFT)
+
+MAX_VALUE = sum(map(abs, SQUARE_WEIGHTS))
+MIN_VALUE = -MAX_VALUE
 
 def squares():
     '''
@@ -234,7 +254,7 @@ if __name__ == '__main__':
 
     while True:
             moves = get_legal_moves('@',board)#gets legal moves for the player
-            print("Your choices:" + str(moves.keys()))#accepts the choice from the player
+            print("Your choices: " + str(moves.keys()))#accepts the choice from the player
             move = int(input('Enter Choice:'))#accepts the choice from the player
             if (move in moves.keys()):
                 board[move] = '@';#puts players disk at chosen space
@@ -247,8 +267,13 @@ if __name__ == '__main__':
                 print("You: "+str(player_score)+"\tComputer: "+str(comp_score))
                 if(game_over(board)):#checks if game is over
                     exit();
-            computer_moves = get_legal_moves('o',board)#gets legal moves for the computer
-            a,b = computer_moves.popitem()#choses first legal move in the dictionary
+            computer_moves = get_legal_moves('o',board)#gets legal moves for the compute
+            print("Computer Choices: "+ str(computer_moves.keys()))
+            # Random Moves by Computer.
+            # a,b = computer_moves.popitem()#choses first legal move in the dictionary
+            alpha, a = alphabeta('o', board, MIN_VALUE, MAX_VALUE, 7)
+            # Change 7 here in the above code to make it a strong/weak player.
+            b = computer_moves[a]
             print("Move chosen:" + str(a))
             board[a] = 'o';
             comp_score+=1
