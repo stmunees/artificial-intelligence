@@ -69,55 +69,59 @@ def game_over(board):
     return True
 
 
-def do_flips(player,i,j,board):
+def do_flips(player,pt,li,board):
     '''
-    flips all opponent disks between a players ith and jth disk
+    flips all opponent disks between a players ith and [j]th disk
     '''
-    x1 = int(i/10)
-    y1 = i%10;
-    x2 = int(j/10)
-    y2 = j%10
+    total = 0;
+    x1 = int(pt/10)
+    y1 = pt%10;
+    for j in li:
+        x2 = int(j/10)
+        y2 = j%10
 
-    count=0;
+        count=0;
 
-    if(x1<x2):
-        xs = x1;xb=x2
-    else:
-        xs = x2;xb=x1
+        if(x1<x2):
+            xs = x1;xb=x2
+        else:
+            xs = x2;xb=x1
 
-    if(y1<y2):
-        ys = y1;yb=y2
-    else:
-        ys = y2;yb=y1
+        if(y1<y2):
+            ys = y1;yb=y2
+        else:
+            ys = y2;yb=y1
 
+        if(x1==x2):
+            for i in range(ys,yb):
+                    if(board[int(str(x1)+str(i))]!=player):
+                        board[int(str(x1)+str(i))] = player
+                        count+=1
 
-    if(x1==x2):
-        for i in range(ys,yb):
-                if(board[int(str(x1)+str(i))]!=player):
-                    board[int(str(x1)+str(i))] = player
-                    count+=1
+        elif(y1==y2):
+            for i in range(xs,xb):
+                    if(board[int(str(i)+str(y1))]!=player):
+                        board[int(str(i)+str(y1))] = player
+                        count+=1
 
-    elif(y1==y2):
-        for i in range(xs,xb):
-                if(board[int(str(i)+str(y1))]!=player):
-                    board[int(str(i)+str(y1))] = player
-                    count+=1
+        else:
 
-    else:
+                slope = (y2-y1)/(x2-x1)
+                start  = ys;
+                if(slope<0):
+                    a = xb;b=xs;incr = -1
+                else:
+                    a = xs;b=xb;incr = 1
 
-            slope = (y2-y1)/(x2-x1)
-            start  = ys;
-            if(slope<0):
-                a = xb;b=xs;incr = -1
-            else:
-                a = xs;b=xb;incr = 1
+                for k in range(a,b,incr):
+                    if(start<=yb and board[int(str(k)+str(start))]!=player):
+                        board[int(str(k)+str(start))]=player
+                        count+=1
+                    start+=1;
+        total+= count;
 
-            for k in range(a,b,incr):
-                if(start<=yb and board[int(str(k)+str(start))]!=player):
-                    board[int(str(k)+str(start))]=player
-                    count+=1
-                start+=1;
-    return count;
+    return total
+
 
 
 def check_for_straight_line(a,b,opp):
@@ -238,10 +242,14 @@ def get_legal_moves(player,board):
     for j in empty_arround_opponent:
         for i in ownpieces:
                 if(check_for_straight_line(i,j,opppieces)):
-                    legals[j] = i;
+                    if(j in legals):
+                        legals[j].append(i)
+                        legals[j] = list(set(legals[j]))
+                    else:
+                        legals[j] = [i]
+
     print("Turn:" + player)
     return legals
-
 
 
 if __name__ == '__main__':
