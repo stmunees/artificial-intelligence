@@ -277,6 +277,7 @@ if __name__ == '__main__':
                     exit();
             computer_moves = get_legal_moves('o',board)#gets legal moves for the compute
             print("Computer Choices: "+ str(computer_moves.keys()))
+            print("Please Wait......")
             # Random Moves by Computer.
             # a,b = computer_moves.popitem()#choses first legal move in the dictionary
             alpha, a = alphabeta('o', board, MIN_VALUE, MAX_VALUE, 7)
