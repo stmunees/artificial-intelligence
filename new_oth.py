@@ -123,12 +123,13 @@ def do_flips(player,pt,li,board):
     return total
 
 
-
 def check_for_straight_line(a,b,opp):
     '''
     checks if a players ath disk and probable bth disk are in a straight line and that there exists
     at least one opponent disk between disk a and  b
     '''
+    # if(a==55 and b==33):
+    #     import pdb; pdb.set_trace()
     x1 = int(a/10)
     y1 = a%10;
     x2 = int(b/10)
@@ -251,7 +252,6 @@ def get_legal_moves(player,board):
     print("Turn:" + player)
     return legals
 
-
 if __name__ == '__main__':
     player_score = 2
     comp_score = 2
@@ -262,7 +262,7 @@ if __name__ == '__main__':
 
     while True:
             moves = get_legal_moves('@',board)#gets legal moves for the player
-            print("Your choices: " + str(moves.keys()))#accepts the choice from the player
+            print("Your choices:" + str(moves.keys()))#accepts the choice from the player
             move = int(input('Enter Choice:'))#accepts the choice from the player
             if (move in moves.keys()):
                 board[move] = '@';#puts players disk at chosen space
@@ -275,7 +275,7 @@ if __name__ == '__main__':
                 print("You: "+str(player_score)+"\tComputer: "+str(comp_score))
                 if(game_over(board)):#checks if game is over
                     exit();
-            computer_moves = get_legal_moves('o',board)#gets legal moves for the compute
+            computer_moves = get_legal_moves('o',board)#gets legal moves for the computer
             print("Computer Choices: "+ str(computer_moves.keys()))
             print("Please Wait......")
             # Random Moves by Computer.
@@ -284,10 +284,9 @@ if __name__ == '__main__':
             # Change 7 here in the above code to make it a strong/weak player.
             b = computer_moves[a]
             print("Move chosen:" + str(a))
-            board[a] = 'o';
+            board[move] = 'o';
             comp_score+=1
             num = do_flips('o',a,b,board)
-            print(num)
             player_score-=num
             comp_score+=num
             print(print_board(board))
