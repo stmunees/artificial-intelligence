@@ -53,6 +53,7 @@ def do_flips(player,pt,li,board):
     '''
     flips all opponent disks between a players ith and [j]th disk
     '''
+
     total = 0;
     x1 = int(pt/10)
     y1 = pt%10;
@@ -95,7 +96,7 @@ def do_flips(player,pt,li,board):
 
                 for k in range(a,b,incr):
                     if(start<=yb and board[int(str(k)+str(start))]!=player):
-                        board[int(str(k)+str(start))]=player
+                        board[int(str(k)+str(start))] = player
                         count+=1
                     start+=1;
         total+= count;
@@ -260,7 +261,7 @@ if __name__ == '__main__':
             computer_moves = get_legal_moves('o',board)#gets legal moves for the computer
             a,b = computer_moves.popitem()#choses first legal move in the dictionary
             print("Move chosen:" + str(a))
-            board[move] = 'o';
+            board[a] = 'o';
             comp_score+=1
             num = do_flips('o',a,b,board)
             player_score-=num
