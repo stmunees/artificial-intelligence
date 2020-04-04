@@ -102,6 +102,7 @@ def play(black_strategy, white_strategy):
     while player is not None:
         move = get_move(strategy(player), player, board)
         make_move(move, player, board)
+        print("Move made by--> " +player + "is:-->" + str(move))
         player = next_player(board, player)
     return board, score(BLACK, board)
 
@@ -132,9 +133,17 @@ def score(player, board):
         elif piece == opp: theirs += 1
     return mine - theirs
 
-
-import random
-
-def random_strategy(player, board):
-    """A strategy that always chooses a random legal move."""
-    return random.choice(legal_moves(player, board))
+from game import constant
+def weighted_score(player, board):
+    """
+    Compute the difference between the sum of the weights of player's
+    squares and the sum of the weights of opponent's squares.
+    """
+    opp = opponent(player)
+    total = 0
+    for sq in squares():
+        if board[sq] == player:
+            total += constant.SQUARE_WEIGHTS[sq]
+        elif board[sq] == opp:
+            total -= constant.SQUARE_WEIGHTS[sq]
+    return total

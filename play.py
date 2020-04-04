@@ -1,4 +1,4 @@
-from game import othellogame,utility
+from game import othellogame,utility,multiAgent
 def check(move, player, board):
     return othellogame.is_valid(move) and othellogame.is_legal(move, player, board)
 
@@ -30,9 +30,10 @@ def get_choice(prompt, options):
 def get_players():
     print('Welcome to OTHELLO!')
     options = { 'human': human,
-                'random': othellogame.random_strategy}
-    black = get_choice('BLACK: choose a strategy', options)
-    white = get_choice('WHITE: choose a strategy', options)
+                'random': multiAgent.random_strategy,
+                'AI':multiAgent.alphabeta_strategy}
+    black = get_choice('Choose plyer using BLACK:', options)
+    white = get_choice('Choose plyer using WHITE:', options)
     return black, white
 
 def main():
