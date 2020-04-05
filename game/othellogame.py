@@ -22,16 +22,6 @@ def initial_board():
     board[54], board[55] = BLACK, WHITE
     return board
 
-def print_board(board):
-    """Get a string representation of the board."""
-    rep = ''
-    rep += '  %s\n' % ' '.join(map(str, range(1, 9)))
-    for row in range(1, 9):
-        begin, end = 10*row + 1, 10*row + 9
-        rep += '%d %s\n' % (row, ' '.join(board[begin:end]))
-    return rep
-
-
 def is_valid(move):
     """Is move a square on the board?"""
     return isinstance(move, int) and move in squares()
@@ -102,7 +92,7 @@ def play(black_strategy, white_strategy):
     while player is not None:
         move = get_move(strategy(player), player, board)
         make_move(move, player, board)
-        print(f"Move made by '{player}'' is:  {str(move)}")
+        print(f"Move made by '{player}' is:  {str(move)}")
         player = next_player(board, player)
     return board, score(BLACK, board)
 

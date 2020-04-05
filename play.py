@@ -3,7 +3,7 @@ def check(move, player, board):
     return othellogame.is_valid(move) and othellogame.is_legal(move, player, board)
 
 def human(player, board):
-    print(othellogame.print_board(board))
+    print(utility.Utility.print_board(board))
     print('Your move?')
     while True:
         utility.Utility.printLegalMoves(othellogame.legal_moves(player, board))
@@ -52,7 +52,7 @@ def main():
         return
     print('Final score:'), score
     print('%s wins!' % ('Black' if score > 0 else 'White'))
-    print(othellogame.print_board(board))
+    print(utility.Utility.print_board(board))
 
 if __name__ == '__main__':
     main()
