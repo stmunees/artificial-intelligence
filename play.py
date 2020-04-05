@@ -16,24 +16,28 @@ def human(player, board):
         except ValueError:
           print("That's not an integer!")
 
-def get_choice(prompt, options):
+def get_choice(prompt, agents):
     print(prompt)
-    print('Options:',end =" ")
-    utility.Utility.printKeys(options)
+    print("Player's to choose from :",end =" ")
+    utility.Utility.printKeys(agents)
     while True:
         choice = input('> ')
-        if choice in options:
-            return options[choice]
+        if choice in agents:
+            return agents[choice],choice
         elif choice:
             print('Invalid choice.')
 
 def get_players():
-    print('Welcome to OTHELLO!')
-    options = { 'human': human,
+    print('!OTHELLO!'.center(20))
+    agents = {  'human': human,
                 'random': multiAgent.random_strategy,
-                'AI':multiAgent.alphabeta_strategy}
-    black = get_choice('Choose plyer using BLACK:', options)
-    white = get_choice('Choose plyer using WHITE:', options)
+                'alpha':multiAgent.alphabeta_strategy,
+                'expec':multiAgent.expectimax_strategy,
+                'minmax':multiAgent.minimax_strategy}
+    black,choice = get_choice('Choose player using BLACK:', agents)
+    if choice in ['alpha','expec','minmax']:
+        agents.pop(choice)
+    white,choice = get_choice('Choose plyer using WHITE:', agents)
     return black, white
 
 def main():

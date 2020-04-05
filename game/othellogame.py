@@ -102,7 +102,7 @@ def play(black_strategy, white_strategy):
     while player is not None:
         move = get_move(strategy(player), player, board)
         make_move(move, player, board)
-        print("Move made by--> " +player + "is:-->" + str(move))
+        print(f"Move made by '{player}'' is:  {str(move)}")
         player = next_player(board, player)
     return board, score(BLACK, board)
 
