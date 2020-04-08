@@ -1,4 +1,4 @@
-from game import othellogame,utility,multiAgent
+from game import othellogame,utility,multiAgent,constant
 def check(move, player, board):
     return othellogame.is_valid(move) and othellogame.is_legal(move, player, board)
 
@@ -27,17 +27,38 @@ def get_choice(prompt, agents):
         elif choice:
             print('Invalid choice.')
 
+def get_level(ai):
+    print("Choose Level 1.Easy 2.Medium 3.Hard")
+    while True:
+        try:
+            choice = int(input('> '))
+            if choice == 1:
+                return ai(constant.Level.EASY)
+            elif choice == 2:
+                return ai(constant.Level.MEDIUM)
+            elif choice == 3:
+                return ai(constant.Level.HARD)
+            else:
+                print('Invalid choice.')
+        except ValueError:
+            print('Invalid choice.')
+
+
+
 def get_players():
     print('!OTHELLO!'.center(20))
     agents = {  'human': human,
                 'random': multiAgent.random_strategy,
-                'alpha':multiAgent.alphabeta_strategy,
-                'expec':multiAgent.expectimax_strategy,
-                'minmax':multiAgent.minimax_strategy}
+                'alpha':multiAgent.alphabeta_agent,
+                'expec':multiAgent.expectimax_agent,
+                'minmax':multiAgent.minimax_agent}
     black,choice = get_choice('Choose player using BLACK:', agents)
     if choice in ['alpha','expec','minmax']:
         agents.pop(choice)
-    white,choice = get_choice('Choose plyer using WHITE:', agents)
+        black = get_level(black)
+    white,choice = get_choice('Choose player using WHITE:', agents)
+    if choice in ['alpha','expec','minmax']:
+        white = get_level(white)   
     return black, white
 
 def main():

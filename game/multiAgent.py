@@ -5,14 +5,20 @@ def random_strategy(player, board):
     """A strategy that always chooses a random legal move."""
     return random.choice(othellogame.legal_moves(player, board))
 
-def alphabeta_strategy(player, board):
-    return alphabeta(player, board, constant.MIN_VALUE, constant.MAX_VALUE,4)[1]
+def alphabeta_agent(level):
+    def alphabeta_strategy(player, board):
+        return alphabeta(player, board, constant.MIN_VALUE, constant.MAX_VALUE,level.value)[1] 
+    return alphabeta_strategy
 
-def expectimax_strategy(player, board):
-    return expectimax_search(player, board, 4)[1]
+def expectimax_agent(level):
+    def expectimax_strategy(player, board):
+        return expectimax_search(player, board, level.value)[1]
+    return expectimax_strategy
 
-def minimax_strategy(player, board):
-     return minimax(player, board, 4)[1]
+def minimax_agent(level):
+    def minimax_strategy(player, board):
+        return minimax(player, board, level.value)[1]
+    return minimax_strategy
 
 
 def alphabeta(player, board, alpha, beta, depth):
