@@ -59,9 +59,9 @@ def get_players():
     white,whitechoice = get_choice('Choose player using WHITE:', agents)
     if whitechoice in ['alpha','expec','minmax']:
         white,whitelevel = get_level(white)
-    while whitechoice == blackchoice and whitelevel == blacklevel:
-        white,whitechoice = get_choice('Both players are same, Please choose new white player', agents)
-        white,whitelevel = get_level(white)
+        while whitechoice == blackchoice and whitelevel == blacklevel:
+            white,whitechoice = get_choice('Both players are same, Please choose new white player', agents)
+            white,whitelevel = get_level(white)
     return black, white
 
 def main():
@@ -74,8 +74,8 @@ def main():
     except EOFError as e:
         print('Goodbye.')
         return
-    print('Final score:'), score
     print('%s wins!' % ('Black' if score > 0 else 'White'))
+    print(f'Final score:{abs(score)}')
     print(utility.Utility.print_board(board))
 
 if __name__ == '__main__':
