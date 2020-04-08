@@ -33,11 +33,11 @@ def get_level(ai):
         try:
             choice = int(input('> '))
             if choice == 1:
-                return ai(constant.Level.EASY)
+                return ai(constant.Level.EASY),constant.Level.EASY.name
             elif choice == 2:
-                return ai(constant.Level.MEDIUM)
+                return ai(constant.Level.MEDIUM),constant.Level.MEDIUM.name
             elif choice == 3:
-                return ai(constant.Level.HARD)
+                return ai(constant.Level.HARD),constant.Level.HARD.name
             else:
                 print('Invalid choice.')
         except ValueError:
@@ -52,13 +52,16 @@ def get_players():
                 'alpha':multiAgent.alphabeta_agent,
                 'expec':multiAgent.expectimax_agent,
                 'minmax':multiAgent.minimax_agent}
-    black,choice = get_choice('Choose player using BLACK:', agents)
-    if choice in ['alpha','expec','minmax']:
-        agents.pop(choice)
-        black = get_level(black)
-    white,choice = get_choice('Choose player using WHITE:', agents)
-    if choice in ['alpha','expec','minmax']:
-        white = get_level(white)   
+    black,blackchoice = get_choice('Choose player using BLACK:', agents)
+    if blackchoice in ['alpha','expec','minmax']:
+        # agents.pop(choice)
+        black,blacklevel = get_level(black)
+    white,whitechoice = get_choice('Choose player using WHITE:', agents)
+    if whitechoice in ['alpha','expec','minmax']:
+        white,whitelevel = get_level(white)
+    while whitechoice == blackchoice and whitelevel == blacklevel:
+        white,whitechoice = get_choice('Both players are same, Please choose new white player', agents)
+        white,whitelevel = get_level(white)
     return black, white
 
 def main():
