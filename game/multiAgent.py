@@ -96,7 +96,8 @@ def minimax(player, board, depth):
         return -minimax(othellogame.opponent(player), board, depth-1)[0]
 
     if depth == 0:
-        return othellogame.score(player, board), None
+        score = othellogame.score(player, board)
+        return score[0] - score[1],None
     
     moves = othellogame.legal_moves(player, board)
     
