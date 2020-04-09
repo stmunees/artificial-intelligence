@@ -76,6 +76,8 @@ def main():
         return
     print('%s wins!' % ('Black' if score > 0 else 'White'))
     print(f'Final score:{abs(score)}')
+    print(f'Average time taken per move by Black player(@) is : {utility.Utility.get_average_time(othellogame.total_black)} seconds')
+    print(f'Average time taken per move by White player(o) is : {utility.Utility.get_average_time(othellogame.total_white)} seconds')
     print(utility.Utility.print_board(board))
 
 if __name__ == '__main__':

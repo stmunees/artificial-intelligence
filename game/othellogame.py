@@ -7,6 +7,8 @@ PLAYERS = {BLACK: 'Black', WHITE: 'White'}
 UP, DOWN, LEFT, RIGHT = -10, 10, -1, 1
 UP_RIGHT, DOWN_RIGHT, DOWN_LEFT, UP_LEFT = -9, 11, 9, -11
 DIRECTIONS = (UP, UP_RIGHT, RIGHT, DOWN_RIGHT, DOWN, DOWN_LEFT, LEFT, UP_LEFT)
+total_white = []
+total_black = []
 
 def squares():
     """List all the valid squares on the board."""
@@ -84,15 +86,23 @@ def any_legal_move(player, board):
     """Can player make any moves?"""
     return any(is_legal(sq, player, board) for sq in squares())
 
+from datetime import datetime
 def play(black_strategy, white_strategy):
     """Play a game of Othello and return the final board and score."""
     board = initial_board()
     player = make_initial_random_move(board)
     strategy = lambda who: black_strategy if who == BLACK else white_strategy
     while player is not None:
+        starttime = datetime.now()
         move = get_move(strategy(player), player, board)
         make_move(move, player, board)
-        print(f"Move made by '{player}' is:  {str(move)}")
+        endtime = datetime.now()
+        time = (endtime - starttime).total_seconds()
+        if player == BLACK:
+            total_black.append(time)
+        else:
+            total_white.append(time)
+        print(f"Move made by '{player}' is:  {str(move)} in {time} seconds")
         player = next_player(board, player)
     return board, score(BLACK, board)
 
@@ -117,11 +127,15 @@ from game.multiAgent import random_strategy as random
 def make_initial_random_move(board):
     player = BLACK
     copy = list(board) # copy the board to prevent cheating
+    starttime = datetime.now()
     move = random(player, copy)
+    endtime = datetime.now()
+    time = (endtime - starttime).total_seconds()
     if not is_valid(move) or not is_legal(move, player, board):
         raise IllegalMoveError(player, move, copy)
     make_move(move, player, board)
-    print(f"Move made by '{player}' is:  {str(move)}")
+    total_black.append(time)
+    print(f"Move made by '{player}' is:  {str(move)} in {time} seconds")
     player = next_player(board, player)
     return player
 

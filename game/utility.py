@@ -17,3 +17,7 @@ class Utility:
             begin, end = 10*row + 1, 10*row + 9
             rep += '%d %s\n' % (row, ' '.join(board[begin:end]))
         return rep
+
+    @staticmethod  
+    def get_average_time(list):
+        return sum(list) / len(list)
