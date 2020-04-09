@@ -116,9 +116,9 @@ MIN_VALUE = -MAX_VALUE
 
 def final_value(player, board):
     """The game is over--find the value of this board to player."""
-    diff = othellogame.score(player, board)
-    if diff < 0:
+    score = othellogame.score(player, board)
+    if (score[0] - score[1]) < 0:
         return MIN_VALUE
-    elif diff > 0:
+    elif (score[0] - score[1]) > 0:
         return MAX_VALUE
-    return diff
+    return (score[0] - score[1])
