@@ -87,7 +87,7 @@ def any_legal_move(player, board):
 def play(black_strategy, white_strategy):
     """Play a game of Othello and return the final board and score."""
     board = initial_board()
-    player = BLACK
+    player = make_initial_random_move(board)
     strategy = lambda who: black_strategy if who == BLACK else white_strategy
     while player is not None:
         move = get_move(strategy(player), player, board)
@@ -112,6 +112,19 @@ def get_move(strategy, player, board):
     if not is_valid(move) or not is_legal(move, player, board):
         raise IllegalMoveError(player, move, copy)
     return move
+    
+from game.multiAgent import random_strategy as random
+def make_initial_random_move(board):
+    player = BLACK
+    copy = list(board) # copy the board to prevent cheating
+    move = random(player, copy)
+    if not is_valid(move) or not is_legal(move, player, board):
+        raise IllegalMoveError(player, move, copy)
+    make_move(move, player, board)
+    print(f"Move made by '{player}' is:  {str(move)}")
+    player = next_player(board, player)
+    return player
+
 
 def score(player, board):
     """Compute player's score (number of player's pieces minus opponent's)."""
