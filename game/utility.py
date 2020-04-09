@@ -21,3 +21,7 @@ class Utility:
     @staticmethod  
     def get_average_time(list):
         return sum(list) / len(list)
+
+    @staticmethod  
+    def get_total_time(list):
+        return sum(list)

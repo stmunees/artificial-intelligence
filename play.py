@@ -74,10 +74,10 @@ def main():
     except EOFError as e:
         print('Goodbye.')
         return
-    print('%s wins!' % ('Black' if score > 0 else 'White'))
-    print(f'Final score:{abs(score)}')
-    print(f'Average time taken per move by Black player(@) is : {utility.Utility.get_average_time(othellogame.total_black)} seconds')
-    print(f'Average time taken per move by White player(o) is : {utility.Utility.get_average_time(othellogame.total_white)} seconds')
+    print('%s wins!' % ('Black' if score[0] - score[1] > 0 else 'White'))
+    print(f' Score for BLACK is: {abs(score[0])} and WHITE is: {abs(score[1])}')
+    print(f' Total time taken by Black(@) is: {utility.Utility.get_total_time(othellogame.total_black)} seconds and average per move is: {utility.Utility.get_average_time(othellogame.total_black)}')
+    print(f' Total time taken by White(o) is: {utility.Utility.get_total_time(othellogame.total_white)} seconds and average per move is: {utility.Utility.get_average_time(othellogame.total_white)}')
     print(utility.Utility.print_board(board))
 
 if __name__ == '__main__':

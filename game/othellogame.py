@@ -148,7 +148,7 @@ def score(player, board):
         piece = board[sq]
         if piece == player: mine += 1
         elif piece == opp: theirs += 1
-    return mine - theirs
+    return mine,theirs
 
 from game import constant
 def weighted_score(player, board):
