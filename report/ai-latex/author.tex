@@ -1,99 +1,183 @@
 \documentclass{svproc}
 \usepackage{url}
+\usepackage{graphicx}
+\usepackage{adjustbox}
+\usepackage{float}
 \def\UrlFont{\rmfamily}
 
 \begin{document}
 \mainmatter
-\title{Your Project Report Title Here
+\title{Comparative Study of Artificial Intelligence algorithms for Othello
 }
 \subtitle{CS7IS2 Project (2019/2020)}
-\author{Student Name \and (Multiple names separated by comma)}
+\author{Esmond D'Souza, Hemlata Sharma, Oommen Kuruvilla, \and Tejas Munees}
 
 \institute{
-\email{email\_address\_1}, (multiple email addresses separated by comma)}
+\email{dsouzae@tcd.ie, sharmah@tcd.ie, kuruvilo@tcd.ie, sivaramt@tcd.ie}}
 
 \maketitle              % typeset the title of the contribution
 
 \begin{abstract}
-The abstract should summarize the contents of the report and should contain at least 70 and at most 150 words. It should be set in 9-point font size and should be inset 1.0 cm from the right and left margins. There should be two blank (10-point) lines before and after the abstract. This document is in the required format. The abstract should give a concise overview of the main points of the report: the motivation behind the work, a very high level description of the problem and how it was solved by the proposed algorithms. The abstract must not include any figures or table.
-\keywords{computational geometry, graph theory, Hamilton cycles}
+This paper studies and analyses different artificial intelligence algorithms. Their performance is measured via implementation on the game, Othello. Othello is a zero sum game and perfect information game. This study uses 3 different algorithms, namely, Minimax, Expectimax, and Alpha-Beta Pruning, along with a random agent. We make the agents play against each other with different difficulty settings, determined by the depth of the search and record wins, scores, total time taken and avg time per move by both agents in every game. These are then compared in an exploratory nature.
+
+\keywords{Othello, AI, minimax, expectimax, alpha-beta pruning}
 \end{abstract}
 %
 
-This document is a guideline for writing the final report for the CS7IS2 module Artificial Intelligence. You should follow its general structure as shown below.
-You should not change its format (font, size, margin, space, etc.). 
-Your report should be between five and ten pages. Report that not comply to the format or exceed the maximum length will be penalised (-5 marks).
-Brevity is desirable in communication, however you should provide all those details necessary for the good understanding of the described methods and algorithms. 
-The report will be graded on the basis of:
-\begin{itemize}
-\item Originality;
-\item Technical soundness;
-\item Organisation;
-\item Clarity of presentation;
-\item Adequacy of bibliography/Results (this last point strongly depends on the type of report)
-\end{itemize}
-
-\begin{description}
-Your report should provide a survey and an experimental comparison of multiple solution approaches to a particular problem. This is a critical review of at least three papers that significantly contributed to advance the state-of-the-art for the problem you are analysing. It should not be a mere summary of the papers. You are expected to conduct an analytical review of the methods under analysis to try to find common aspect and differences, connections between methods, drawbacks and open problems. Unless the faced problem has emerged recently, students should choose their papers by diversifying the range of approaches used to solve the problem. A good guideline could be to choose a paper from a decade or two ago, and a couple of more recent papers. You need to experimentally evaluate approaches in a simulation of a problem, in a range of scenarios, and analyse the pros and cons of each approach. 
-\end{description}
-
 \section{Introduction}
-In this section, you should introduce your work: what are the motivations behind this work? What is the relevant problem that you are investigating? Why is it relevant? 
-Briefly, introduce the background information required to understand the problem and the concepts that you will develop. 
 
-\section{Related Work}
-In this section you will discuss possible approaches to solve the problem you are addressing, justifying your choice of the 3 you have selected to evaluate. Also, briefly introduce the approaches you are evaluating with a specific emphasis on differences and similarities to the proposed approach(es).
+Artificial Intelligence (AI) is major part of computer games and the role they play has only continued to increase as time progress as a reason of complex game-play, environment and in-game interactive objects. While the research interest in artificial intelligence is in its peak today, the implementation of it, and an attempt to use that in games is nothing new. This is an area that dates back to 1960s.
 
-\section{Problem Definition and Algorithm}
-This section formalises the problem you are addressing and the models used to solve it. This section should provide a technical discussion of the chosen/implemented algorithms. A pseudocode description of the algorithm(s) can also be beneficial to a clear explanation. It is also possible to provide one example that clarifies the way an algorithm works. It is important to highlight in this section the possible parameters involved in the model and their impact, as well as all the implementation choices that can impact the algorithm.
+Around 1968, a chess master named David Levy challenged John McCarthy, who is known as the founder father of AI, that no computer would beat the a grand master within ten years. After five years of John had given up only because it had become certain that computers won't be able to play or win the way humans did \cite{MIT_lecture}.
 
-\subsection{Subsection Title}
+20 odd years later, IBM's Deep Blue beat the world chess champion with two wins, one lost and three draws. Although McCarty could've been right on computers not playing the way humans did, today we have one of the closest representation to human's way of playing- neural networks. Deep Chess is one such network created by Omid E. David, Nathan S. Netanyahu and Lior Wolf \cite{deepchess} which uses several layers of neural networks in its model.
 
-\section{Experimental Results}
-This section should provide the details of the evaluation. Specifically:
+However long before our portable computers became powerful and sophisticated enough to run deep neural networks, we had complex artificial intelligence models like Deep Blue. Most of such models use a brute-force search approach, albeit they did them intelligently.
+
+While it is easy to neglect a brute force search algorithm as not an intelligent solution. But it is important to understand the intelligence factor in such searching. In chess for example, in order to brute force search one move followed by potential opponents and self's moves till the end of the tree, it would easily reach the order of 10\textsuperscript{120} and to put that in perspective, the number of nanoseconds in the entire history of universe is of the order 10\textsuperscript{106} \cite{MIT_lecture}. Hence the computation becomes impossible and therefore the intelligence component becomes vital in such models, and even so when it is required to be competent enough to beat the world champion. In this paper, we discuss such artificial intelligence and implement them for the game Othello. We try to compare the efficiency, time taken and win percentage.
+
+\subsection{Othello}
+
+Othello also known as Reversi, like chess and checkers is a two-player game. According to game theory, Othello is deterministic, zero sum game and perfect information game. The game is deterministic is because any move done by the player has no degree of randomness to where it could land. The probability of the move going to the position where the player intended it to go is 100\%. The game is zero sum because of its nature where of you add the gains of both player and subtract it with their loses, the sum becomes zero. Here the gain is the number of player's own pieces and loses is given by the number of opponent's pieces and because of this, the game is adversarial in nature. Also, the game is a perfect information game as it a sequential-move based game, where a player is able to see what the other player has done before choosing their own next move and also a player is capable of knowing their opponent's possible moves. The goal of the game is to have the maximum number of disks of the two players to win.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.5]{img1.png}
+\caption{Initial State of the board. (Taken from \cite{image_website})} \label{fig1}
+\end{figure}
+
+The game begins in a state as shown in Figure \ref{fig1}, where the white and black pieces are placed at D4, E5 and E4, D5 respectively. The black piece always begins the game where the initial valid/legal moves for the black are given by ‘x’ in Figure \ref{fig1}. A move is considered valid or legal only if a player (lets say, Player\_1) is able to land a piece on board where there is at least one opponent piece in between the position where the Player\_1 is about to place the piece and a another piece that has already been previously landed on board by the Player\_1. This is allowed horizontally, vertically and diagonally and combinations of these as well. Once Player\_1 has made such a valid move, the opponent's pieces in between are flipped to the opposite color and becomes Player\_1's pieces. The game generally ends when both players are unable to make anymore valid or legal moves. While there exists smaller version of the board, it is generally played in an 8x8 board and we would use the same in this paper.
+
+The paper is organised as follows: Section \ref{2} discusses the state of the art in artificial intelligence specially their implementation in the game Othello. Section \ref{3} talks about the algorithms used in this research and its results in Section \ref{4}. The paper then is concluded in Section \ref{5}.
+
+\section{Related Work}\label{2}
+
+As mentioned earlier, techniques like neural networks, reinforcement learning, and ensemble models amongst many others have today become possible because of high computational resources. These techniques and many other new ones are the state of the art techniques used for games like Othello.
+
+One such research was conducted by authors Skoulakis, I.E. and Lagoudakis in 2012 \cite{esmond_1}. The authors suggest a novel technique of using reinforcement learning efficiently for adversarial games. Sequential-move based games often need decision making concerning the moves. Artificial intelligence search algorithms like min-max and its modifications often help in the same by using Temporal Difference (TD) learning that strives on bootstrapping methods to evaluate the optimality of the move \cite{esmond_1}.
+
+These evaluation functions paired up with temporal differences commonly face issues as historical game data is not taken into consideration and the evaluation function is just updated incrementally based on the current actions. As the computer can't process all the future steps and limits it to a considerable depth value, this results in the computer learning to make the best decision in the current context only not considering all the possible moves as mentioned earlier.
+
+The authors propose a novel algorithm under the name, Least-Squares Policy Iteration (LSPI). This algorithm updates the evaluation function based on the current and passed state, the reward received per action, the rewards received in the past games played by the computer or even games played by other agents. As a result, at each step of interaction, the computer observes the current state, selects the calculated action to be taken, and observes the resulting next state along with the reward received \cite{esmond_1}.
+
+The main change in the LSPI algorithm to make it suitable for the adversarial game environments is the calculation of the evaluation policy in the result for the next state. The authors accomplished this by using a shallow minimax searching algorithm to get the best response of Min and Max. As compared to the traditional TD learning method, this algorithm makes batch updates to the evaluation function without bootstrapping with the collection of samples from previous games, or old samples even played by other agents \cite{esmond_1}.
+
+As for the evaluation part the authors used and compared three different types of models to assess the benefits and drawbacks of the LSPI algorithm during adversarial gaming. For this experiment, the models used were the TD (Self-play), LSPI (TD Samples) and LSPI (Self-play) models. The TD (Self-play) model learns from itself in the current context using its passed moves and the moves of the opponent as samples, which is the considered the typical way for adversarial games \cite{esmond_1}. The LSPI (TD Samples) models use the LSPI algorithm along with the TD Samples only to check the efficiency of both given the same sample space, and finally, the LSPI (Self-play) model learns from its current game playing moves, along with its opponents moves, its moves of games played against other agents and games played by other agents.
+
+The result clearly states that the LSPI (Self-playing) models perform the best with less number of samples, however, the learning curve flattens after a while as the same agents play with the same moves continuously. On the contrary, the LSPI (TD-samples) model benefits from the variability of the TD learning algorithm and has a steady learning curve right from the start which in time constantly improves, however it performs low as compared to the first model with the same number of samples. Lastly, the TD (Self-play) model neither performs well with the same number of samples nor does its performance improve with an increase in the sample size. The authors of this paper conclude by comparing the improvement of the LSPI learning method over the traditional TD learning and propose a conjunction of them both in their future works \cite{esmond_1}.
+
+A similar state of the art by authors, K. Kim, H. Choi and S. Cho examines an ensemble/hybrid model of evolution and reinforcement learning for Othello in their research work \cite{esmond_2}. They suggest the combination of the evaluation algorithm along with reinforcement learning to boost the capabilities of the agent playing the game.
+
+The top Othello programs like \emph{Lositello}, \emph{Ntest} and \emph{Xzebra} have their pre-evaluated calculations for the moves in the initial stage and then the evaluation functions update depending on the gameplay. The authors suggest the combination of the evaluation algorithm with temporal learning at the beginning of the game as an opening book rule and then incrementally update and discover more knowledge using reinforcement learning \cite{esmond_2}. The latter is done by using the rules from self-playing and endgame solver that computes the stage at the end of the game.
+
+This method according to the authors consists of two parts, first with the help of temporal learning, premature solutions are identified which correspond to the high-performance actions. After this, the evolutionary algorithm is used to further filter down and find better actions to be taken. The population of the evolutionary algorithm could be initialised by leveraging the previous knowledge from self-playing. To perform efficiently, the evolutionary algorithm can utilise the previously discovered knowledge from the reinforcement learning. This, in turn, would help them discover better strategies.
+
+As for the initial moves to be selected, the authors suggest two ways to finalise them , one is to draw down all the good and bad moves from subject matter experts \cite{esmond_2}. The second and more popular way was to access the scores of each move by comparing the results of the previous games with those moves \cite{esmond_2}. For example, if the majority of previous games resulted in a loss the move was given negative points and vice-versa. However, this assumption was proved to be false in some situations and the method used to overcome it was by using self-play with a predefined depth revealing the effect of the opening moves. By paying more games, the relevance of the results could be highly improved resulting in a better prediction of moves to be selected.
+
+Further, the authors have made use of neural networks for evaluation of the board configuration, and for all the other steps, reinforcement learning using the opening choices and/or endgame knowledge was evaluated. For the model evaluation, the authors compared and contrasted four models namely \cite{esmond_2},
+
+\begin{enumerate}
+\item EV - evolution model with no knowledge
+\item EV\_O - evolution model with opening knowledge
+\item EV\_E - evolution model with endgame knowledge
+\item EV\_O\_E - evolution model with opening and endgame knowledge.
+\end{enumerate}
+
+Concerning the results, the EV\_O\_E was generally the best performer in both cases when the same computational consumption and the same number of generations were used. Its performance was the best against the evolutional model with no prior knowledge (EV) in the first case and the evolutional model with opening knowledge (EV\_O) in the latter. In both cases, the EV model was the worst performer. The main point highlighted here by the authors was the performance of the EV\_E model over the EV\_O model in the majority of the cases \cite{esmond_2}. EV\_E performed considerably low in the early stages but reversed the results at the end of the game.
+
+The authors conclude the benefits of using domain knowledge while playing Othello and prove the benefits of using both types of knowledge (opening and endgame) was highly beneficial as compared to either one \cite{esmond_2}.
+
+However optimisation need not necessarily come by trying out different from algorithms, forming gaming strategies for any game AI model is also equally essential, which is explained by authors C. Frankland and N. Pillay in \cite{hema_1}.This study explains how Genetic Programming is used to optimise game playing for an Othello player.
+
+Genetic Programming is encoding Darwin’s ‘Survival of the fittest’ theory,  “The best of one generation mate to produce offsprings that are better than the previous generation, mimicking natural selection. Mutations are also introduced in the offsprings”. In GP, members of the population are represented by solution trees and evaluation of the fittest is done using heuristics. Throughout the game, the player does not stick to one solution tree, instead a combination of the best tree is used for every move.
+
+In this study, the initial population is randomly generated and each heuristic represented as an area of the board. Each square falls into a particular category. For example, the four corners are in the corner defence category and have the same heuristic value. In addition to the board heuristics, there exists boolean strategy heuristics. For example, the ‘tCnrH’ heuristic when set \emph{TRUE}, gives priority to corner points and doubles the heuristic value at a corner point \cite{hema_1}.
+
+In this strategy, the first element of the population plays against the alpha player a number of times. An alpha player can be randomly generated at the start or be carried forward from the previous game. The fitness of an element is calculated by the number of wins and ties. A win is rewarded with two points while a tie is rewarded by one point. The winner becomes an alpha player and competes with the next element of the population and so on, until all elements of the population have played against the alpha. Tournament Selection is used to choose the parents of the next generation.
+
+Since GP is a machine learning approach, the performance is better than traditional search algorithms. However according to the authors, an initial population size of greater than 100 can significantly reduce the speed of computation \cite{hema_1}.
+
+All the state of the art studies discussed above present a novel and interesting implementation of different strategies. As a way forward to such implementations, in this study we would implement a basic AI agent game strategies and build the game with rules and regulations, which would enable us in future to build novel and state of the art strategies for the game, Othello.
+
+\section{Algorithms}\label{3}
+
+In this project, we have implemented four different strategies with depth variations to few of them. They are,
+
 \begin{itemize}
-\item Methodology: describe the evaluation criteria, the data used during the evaluation, and the methodology followed to perform the evaluation. 
-\item Results: present the results of the experimental evaluation. Graphical data and tables are two common ways to present the results. Also, a comparison with a baseline should be provided.
-\item Discussion: discuss the implication of the results of the proposed algorithms/models. What are the weakness/strengths of the method(s) compared with the other methods/baseline?
+    \item Random
+    \item Minimax
+    \item Alpha-Beta Pruning
+    \item Expectimax
 \end{itemize}
 
-\section{Conclusions}
-Provide a final discussion of the main results and conclusions of the report. Comment on the lesson learnt and possible improvements.
+The input to all these algorithms is a list of legal moves for the agent, the current board positions and other parameters that are required based on the algorithms, when it is the agent’s turn to play. The list of legal moves is a list of positions where the agent can place a disk such that one or more of the opponent’s disks get flipped. For the random strategy, the agent randomly selects a move from the list of legal moves. For the remaining of the algorithms, Search trees are generated to a limited depth, chosen based on difficulty levels, Easy, Medium and Hard having depths 3, 5, and 7 respectively. A  search tree is expanded by each of the legal moves. Moves on the first level are legal moves for the agent, the nodes on the next level are legal moves for the opponent player/agent for each of the nodes on the first level. At the leaf nodes on the bottom of the tree, heuristics is calculated as the total number of disks of the agent/player based on the weighted score.
+
+In minimax, for each level of agent's moves, the agent picks the move that will maximize its utility assuming that the opponent player chooses a move that minimizes the agent’s utility. The search takes place using Breadth-First Search (BFS). All possible nodes are explored in order to choose the best move.
+Alpha-beta pruning is a more efficient version of the minimax algorithm where not all nodes are explored. Depth-First Search (DFS) is used for searching instead of BFS. The record of the best possible utility for maximizers and minimizers is maintained.  The values are updated only if a maximizer encounters a higher utility node and if a minimizer encounters a lower utility node. Higher utility nodes have no effect on the value of the minimizer and lower utility nodes have no effect on the value of the minimizer. This way a good amount of branch is pruned saving computational cost and time.
+
+Expectimax is similar to minimax, except, instead of minimisers, we have chance nodes. These chance nodes helps the algorithm to take risk that either allows for a higher utility state or a lower utility state. These chance nodes are expected (mean) values of their children nodes. This makes expectimax as not 100\% safe, as there is a possibility of a lower utility state. As depth increases, probability of reaching a given search node decreases making it more damaging. Since there is no pruning possible for expectimax, it can become very slow, depending on the unexplored children.
+
+We also used Score board Heuristic as seen in Table \ref{board} which was derived from \cite{hboard}. This heuristic is used to calculate score internally which the algorithms try to maximise and minimise as necessary.
+
+\begin{table}[H]
+\centering
+\begin{adjustbox}{width=4cm,center}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|l|l|l|l|l|l|l|}
+\hline
+120 & -20 & 20 & 5  & 5  & 20 & -20 & 120 \\ \hline
+-20 & -40 & -5 & -5 & -5 & -5 & -40 & -20 \\ \hline
+20  & -5  & 15 & 3  & 3  & 15 & -5  & 20  \\ \hline
+5   & -5  & 3  & 3  & 3  & 3  & -5  & 5   \\ \hline
+5   & -5  & 3  & 3  & 3  & 3  & -5  & 5   \\ \hline
+20  & -5  & 15 & 3  & 3  & 15 & -5  & 20  \\ \hline
+-20 & -40 & -5 & -5 & -5 & -5 & -40 & -20 \\ \hline
+120 & -20 & 20 & 5  & 5  & 20 & -20 & 120 \\ \hline
+\end{tabular}%
+}
+\end{adjustbox}
+\caption{Score Board Heuristic}
+\label{board}
+\end{table}
+
+\section{Experimental Results}\label{4}
+
+Our strategies are represented as agents in our project. To evaluate the performance of our agents/players, we tested them against each other in such a way that every agent played 6 games against every other agent, 3 of which were started with one agent playing first with all possible difficulty settings.
+
+Minimax , Alpha-beta and Expectimax have three agents each, one of every difficulty level: easy, medium and hard, while random has only one agent. For each game between two agents, we took into account score of the agent, total game time by an agent, avg time taken by an agent for a move.
+
+Table \ref{table1} shows us the total wins by each agent with various difficulty level over a set of three games. We can also see the total score in over three games by each agent over the same set of three games in Table \ref{table2}.
 
 
-A standard and well formatted bibliography of papers cited in the report. For example:
+
+\section{Conclusion}\label{5}
+
+
 
 \begin{thebibliography}{6}
 %
 
-\bibitem {smit:wat}
-Smith, T.F., Waterman, M.S.: Identification of common molecular subsequences.
-J. Mol. Biol. 147, 195?197 (1981). \url{doi:10.1016/0022-2836(81)90087-5}
+\bibitem{MIT_lecture}
+Patrick Winston.  6.034. Artificial Intelligence. Fall 2010. Massachusetts Institute of Technology: MIT OpenCourseWare, \url{https://ocw.mit.edu/}. License: Creative Commons BY-NC-SA.
 
-\bibitem {may:ehr:stein}
-May, P., Ehrlich, H.-C., Steinke, T.: ZIB structure prediction pipeline:
-composing a complex biological workflow through web services.
-In: Nagel, W.E., Walter, W.V., Lehner, W. (eds.) Euro-Par 2006.
-LNCS, vol. 4128, pp. 1148?1158. Springer, Heidelberg (2006).
-\url{doi:10.1007/11823285_121}
+\bibitem{deepchess}
+David, Omid E., Nathan S. Netanyahu, and Lior Wolf. “DeepChess: End-to-End Deep Neural Network for Automatic Learning in Chess.” Lecture Notes in Computer Science (2016): 88–96. Crossref. Web.
 
-\bibitem {fost:kes}
-Foster, I., Kesselman, C.: The Grid: Blueprint for a New Computing Infrastructure.
-Morgan Kaufmann, San Francisco (1999)
+\bibitem{image_website}
+“Games for Young- Othello” webpage,
+\url{https://www.gamesforyoungminds.com/blog/2018/3/23/othello-review}.
+Last Accessed on 30 March 2020.
 
-\bibitem {czaj:fitz}
-Czajkowski, K., Fitzgerald, S., Foster, I., Kesselman, C.: Grid information services
-for distributed resource sharing. In: 10th IEEE International Symposium
-on High Performance Distributed Computing, pp. 181?184. IEEE Press, New York (2001).
-\url{doi: 10.1109/HPDC.2001.945188}
+\bibitem{esmond_1}
+Skoulakis, Ioannis E. and Michail G. Lagoudakis. “Efficient Reinforcement Learning in Adversarial Games.” 2012 IEEE 24th International Conference on Tools with Artificial Intelligence 1 (2012): 704-711.
 
-\bibitem {fo:kes:nic:tue}
-Foster, I., Kesselman, C., Nick, J., Tuecke, S.: The physiology of the grid: an open grid services architecture for distributed systems integration. Technical report, Global Grid
-Forum (2002)
+\bibitem{esmond_2}
+K. Kim, H. Choi and S. Cho, "Hybrid of Evolution and Reinforcement Learning for Othello Players," 2007 IEEE Symposium on Computational Intelligence and Games, Honolulu, HI, 2007, pp. 203-209.
 
-\bibitem {onlyurl}
-National Center for Biotechnology Information. \url{http://www.ncbi.nlm.nih.gov}
+\bibitem{hema_1}
+C. Frankland and N. Pillay, "Evolving game playing strategies for Othello," 2015 IEEE Congress on Evolutionary Computation (CEC), Sendai, 2015, pp. 1498-1504.
 
+\bibitem{hboard}
+T. S. Somasundaram, K. Panneerselvam, T. Bhuthapuri, H. Mahadevan and A. Jose, "Double Q–learning Agent for Othello Board Game," 2018 Tenth International Conference on Advanced Computing (ICoAC), Chennai, India, 2018, pp. 216-223.
 
 \end{thebibliography}
-\end{document}
