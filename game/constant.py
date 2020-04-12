@@ -18,4 +18,4 @@ MIN_VALUE = -MAX_VALUE
 class Level(Enum):
     EASY   = 3
     MEDIUM = 5
-    HARD   = 7
+    HARD   = 6

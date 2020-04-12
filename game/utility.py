@@ -10,7 +10,6 @@ class Utility:
     
     @staticmethod  
     def print_board(board):
-        """Get a string representation of the board."""
         rep = ''
         rep += '  %s\n' % ' '.join(map(str, range(1, 9)))
         for row in range(1, 9):

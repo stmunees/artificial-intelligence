@@ -11,32 +11,24 @@ total_white = []
 total_black = []
 
 def squares():
-    """List all the valid squares on the board."""
     return [i for i in range(11, 89) if 1 <= (i % 10) <= 8]
 
 def initial_board():
-    """Create a new board with the initial black and white positions filled."""
     board = [OUTER] * 100
     for i in squares():
         board[i] = EMPTY
-    # The middle four squares should hold the initial piece positions.
     board[44], board[45] = WHITE, BLACK
     board[54], board[55] = BLACK, WHITE
     return board
 
 def is_valid(move):
-    """Is move a square on the board?"""
     return isinstance(move, int) and move in squares()
 
 def opponent(player):
-    """Get player's opponent piece."""
     return BLACK if player is WHITE else WHITE
 
 def find_bracket(square, player, board, direction):
-    """
-    Find a square that forms a bracket with `square` for `player` in the given
-    `direction`.  Returns None if no such square exists.
-    """
+
     bracket = square + direction
     if board[bracket] == player:
         return None
@@ -46,19 +38,16 @@ def find_bracket(square, player, board, direction):
     return None if board[bracket] in (OUTER, EMPTY) else bracket
 
 def is_legal(move, player, board):
-    """Is this a legal move for the player?"""
     hasbracket = lambda direction: find_bracket(move, player, board, direction)
     return board[move] == EMPTY and any(map(hasbracket, DIRECTIONS))
 
 def make_move(move, player, board):
-    """Update the board to reflect the move by the specified player."""
     board[move] = player
     for d in DIRECTIONS:
         make_flips(move, player, board, d)
     return board
 
 def make_flips(move, player, board, direction):
-    """Flip pieces in the given direction as a result of the move by player."""
     bracket = find_bracket(move, player, board, direction)
     if not bracket:
         return
@@ -67,7 +56,6 @@ def make_flips(move, player, board, direction):
         board[square] = player
         square += direction
 
-### Monitoring players
 
 class IllegalMoveError(Exception):
     def __init__(self, player, move, board):
@@ -78,8 +66,7 @@ class IllegalMoveError(Exception):
     def __str__(self):
         return '%s cannot move to square %d' % (PLAYERS[self.player], self.move)
 
-def legal_moves(player, board):
-    """Get a list of all legal moves for player."""
+def list_legal_moves(player, board):
     return [sq for sq in squares() if is_legal(sq, player, board)]
 
 def any_legal_move(player, board):
@@ -87,8 +74,8 @@ def any_legal_move(player, board):
     return any(is_legal(sq, player, board) for sq in squares())
 
 from datetime import datetime
-def play(black_strategy, white_strategy):
-    """Play a game of Othello and return the final board and score."""
+def start(black_strategy, white_strategy):
+    """Start a game of Othello """
     board = initial_board()
     player = make_initial_random_move(board)
     strategy = lambda who: black_strategy if who == BLACK else white_strategy
@@ -107,7 +94,6 @@ def play(black_strategy, white_strategy):
     return board, score(BLACK, board)
 
 def next_player(board, prev_player):
-    """Which player should move next?  Returns None if no legal moves exist."""
     opp = opponent(prev_player)
     if any_legal_move(opp, board):
         return opp
@@ -117,7 +103,7 @@ def next_player(board, prev_player):
 
 def get_move(strategy, player, board):
     """Call strategy(player, board) to get a move."""
-    copy = list(board) # copy the board to prevent cheating
+    copy = list(board) 
     move = strategy(player, copy)
     if not is_valid(move) or not is_legal(move, player, board):
         raise IllegalMoveError(player, move, copy)
@@ -126,7 +112,7 @@ def get_move(strategy, player, board):
 from game.multiAgent import random_strategy as random
 def make_initial_random_move(board):
     player = BLACK
-    copy = list(board) # copy the board to prevent cheating
+    copy = list(board) 
     starttime = datetime.now()
     move = random(player, copy)
     endtime = datetime.now()
@@ -141,7 +127,6 @@ def make_initial_random_move(board):
 
 
 def score(player, board):
-    """Compute player's score (number of player's pieces minus opponent's)."""
     mine, theirs = 0, 0
     opp = opponent(player)
     for sq in squares():
@@ -152,10 +137,6 @@ def score(player, board):
 
 from game import constant
 def weighted_score(player, board):
-    """
-    Compute the difference between the sum of the weights of player's
-    squares and the sum of the weights of opponent's squares.
-    """
     opp = opponent(player)
     total = 0
     for sq in squares():

@@ -12,7 +12,7 @@ def human(player, board):
           if val and check(val, player, board):
             return val
           elif val:
-            print('Illegal move--try again.')
+            print(' Move is not valid please try again.')
         except ValueError:
           print("That's not an integer!")
 
@@ -49,15 +49,15 @@ def get_players():
     print('!OTHELLO!'.center(20))
     agents = {  'human': human,
                 'random': multiAgent.random_strategy,
-                'alpha':multiAgent.alphabeta_agent,
-                'expec':multiAgent.expectimax_agent,
-                'minmax':multiAgent.minimax_agent}
+                'alphabeta':multiAgent.alphabeta_agent,
+                'expectimax':multiAgent.expectimax_agent,
+                'minimax':multiAgent.minimax_agent}
     black,blackchoice = get_choice('Choose player using BLACK:', agents)
-    if blackchoice in ['alpha','expec','minmax']:
+    if blackchoice in ['alphabeta','expectimax','minimax']:
         # agents.pop(choice)
         black,blacklevel = get_level(black)
     white,whitechoice = get_choice('Choose player using WHITE:', agents)
-    if whitechoice in ['alpha','expec','minmax']:
+    if whitechoice in ['alphabeta','expectimax','minimax']:
         white,whitelevel = get_level(white)
         while whitechoice == blackchoice and whitelevel == blacklevel:
             white,whitechoice = get_choice('Both players are same, Please choose new white player', agents)
@@ -67,12 +67,12 @@ def get_players():
 def main():
     try:
         black, white = get_players()
-        board, score = othellogame.play(black, white)
+        board, score = othellogame.start(black, white)
     except othellogame.IllegalMoveError as e:
         print(e)
         return
     except EOFError as e:
-        print('Goodbye.')
+        print('Erro')
         return
     print('%s wins!' % ('Black' if score[0] - score[1] > 0 else 'White'))
     print(f' Score for BLACK is: {abs(score[0])} and WHITE is: {abs(score[1])}')
