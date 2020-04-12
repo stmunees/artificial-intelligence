@@ -28,7 +28,7 @@ pip install -r requirements.txt
 ```
 
 
-##TO PLAY GAME
+## TO PLAY GAME
 
 Checkout this repository to your local machine
 
@@ -42,7 +42,7 @@ To start playing
 ```
 python play.py
 ```
-You will be opted to choose both player from human,random,alphabeta,expectimax,minimax
+You will be opted to choose both players from "human,random,alphabeta,expectimax,minimax"
 
 if player you require is human enter 'human'.If the the player choosen is AI, you will be asked to enter level from 1.Easy 2.Medium 3.Hard
 
