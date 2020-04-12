@@ -44,9 +44,14 @@ python play.py
 ```
 You will be opted to choose both players from "human,random,alphabeta,expectimax,minimax"
 
-if player you require is human enter 'human'.If the the player choosen is AI, you will be asked to enter level from 1.Easy 2.Medium 3.Hard
+If you want to play manually, enter "human".
 
-if LEVEL you require is Easy please enter 1.
+If you want to choose AI, choose one of four agents presented to you.
+
+To select the difficulty level, please select
+- '1' for Easy
+- '2' for Medium
+- '3' for Hard
 
 *Enjoy the game.*
 
