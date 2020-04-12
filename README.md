@@ -27,6 +27,30 @@ After that install the required packages using pip,
 pip install -r requirements.txt
 ```
 
+
+##TO PLAY GAME
+
+Checkout this repository to your local machine
+
+Change the current working directory to the path where you have cloned or downloaded the repository.
+
+Once in project directory 
+```
+cd OthelloWithAI
+```
+To start playing
+```
+python play.py
+```
+You will be opted to choose both player from human,random,alphabeta,expectimax,minimax
+
+if player you require is human enter 'human'.If the the player choosen is AI, you will be asked to enter level from 1.Easy 2.Medium 3.Hard
+
+if LEVEL you require is Easy please enter 1.
+
+*Enjoy the game.*
+
+   
 ## For people working on this project,
 
 ### Travis-CI
