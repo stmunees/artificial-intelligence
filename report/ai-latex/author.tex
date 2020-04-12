@@ -11,6 +11,7 @@
 }
 \subtitle{CS7IS2 Project (2019/2020)}
 \author{Esmond D'Souza, Hemlata Sharma, Oommen Kuruvilla, \and Tejas Munees}
+\authorrunning{E. D'Souza, H. Sharma, O. Kuruvilla \and T. Munees}
 
 \institute{
 \email{dsouzae@tcd.ie, sharmah@tcd.ie, kuruvilo@tcd.ie, sivaramt@tcd.ie}}
@@ -117,7 +118,7 @@ Alpha-beta pruning is a more efficient version of the minimax algorithm where no
 
 Expectimax is similar to minimax, except, instead of minimisers, we have chance nodes. These chance nodes helps the algorithm to take risk that either allows for a higher utility state or a lower utility state. These chance nodes are expected (mean) values of their children nodes. This makes expectimax as not 100\% safe, as there is a possibility of a lower utility state. As depth increases, probability of reaching a given search node decreases making it more damaging. Since there is no pruning possible for expectimax, it can become very slow, depending on the unexplored children.
 
-We also used Score board Heuristic as seen in Table \ref{board} which was derived from \cite{hboard}. This heuristic is used to calculate score internally which the algorithms try to maximise and minimise as necessary.
+We also used Score board Heuristic as seen in Table \ref{board} which was derived from \cite{hboard}. This heuristic is used to calculate score internally which the algorithms try to maximise and minimise as necessary where each box corresponds to a similar position on the game board.
 
 \begin{table}[H]
 \centering
@@ -146,12 +147,70 @@ Our strategies are represented as agents in our project. To evaluate the perform
 
 Minimax , Alpha-beta and Expectimax have three agents each, one of every difficulty level: easy, medium and hard, while random has only one agent. For each game between two agents, we took into account score of the agent, total game time by an agent, avg time taken by an agent for a move.
 
-Table \ref{table1} shows us the total wins by each agent with various difficulty level over a set of three games. We can also see the total score in over three games by each agent over the same set of three games in Table \ref{table2}.
+Table \ref{table1} shows us the total wins by each agent with various difficulty level over a set of three games. We can also see the percentage of total score gained and lost across rows and columns respectively in over three games by each agent over the same set of three games in Table \ref{table2}. In both Table \ref{table1} and Table \ref{table2}, $\alpha\beta$ stands for \emph{Alpha-Beta Agent}  $MM$ stands for \emph{Minimax Agent} and $EM$ stands for \emph{Expectimax Agent} and 3, 5 and 7 numbers, specifies the depth of the search used by setting the difficulty to Easy, Medium and Hard respectively. Each game started with a unique first move, to make sure that the data was not redundant and results not skewed.
 
 
+\begin{table}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|}
+\hline
+\textbf{Algorithm}    & \textbf{Random} & \textbf{$\alpha\beta$-3} & \textbf{$\alpha\beta$-5} & \textbf{$\alpha\beta$-7} & \textbf{MM-3} & \textbf{MM-5} & \textbf{MM-7} & \textbf{EM-3} & \textbf{EM-5} & \textbf{EM-7} & \textbf{$\Sigma$ Wins} \\ \hline
+\textbf{Random}       & -               & 0                     & 0                     & 0                     & 0                  & 0                  & 0                  & 3                     & 2                     & 3                     & 8                    \\ \hline
+\textbf{$\alpha\beta$-3} & 3               & -                     & 0                     & 0                     & 3                  & 1                  & 2                  & 1                     & 1                     & 3                     & 14                   \\ \hline
+\textbf{$\alpha\beta$-5} & 3               & 3                     & -                     & 1                     & 3                  & 3                  & 1                  & 3                     & 1                     & 2                     & 20                   \\ \hline
+\textbf{$\alpha\beta$-7} & 3               & 3                     & 3                     & -                     & 3                  & 3                  & 2                  & 3                     & 3                     & 3                     & 26                   \\ \hline
+\textbf{MM-3}    & 2               & 0                     & 0                     & 0                     & -                  & 1                  & 0                  & 3                     & 2                     & 3                     & 11                   \\ \hline
+\textbf{MM-5}    & 3               & 1                     & 0                     & 1                     & 2                  & -                  & 2                  & 3                     & 3                     & 3                     & 18                   \\ \hline
+\textbf{MM-7}    & 3               & 1                     & 1                     & 0                     & 3                  & 3                  & -                  & 3                     & 3                     & 3                     & 20                   \\ \hline
+\textbf{EM-3} & 0               & 0                     & 0                     & 0                     & 0                  & 0                  & 0                  & -                     & 1                     & 2                     & 3                    \\ \hline
+\textbf{EM-5} & 1               & 0                     & 1                     & 0                     & 1                  & 0                  & 0                  & 3                     & -                     & 1                     & 7                    \\ \hline
+\textbf{EM-7} & 3               & 1                     & 0                     & 0                     & 0                  & 0                  & 0                  & 3                     & 3                     & -                     & 10                   \\ \hline
+\end{tabular}%
+}
+\caption{Total wins by different agents over three games}
+\label{table1}
+\end{table}
+
+\begin{table}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|}
+\hline
+\textbf{Algorithm}    & \textbf{Random} & \textbf{$\alpha\beta$-3} & \textbf{$\alpha\beta$-5} & \textbf{$\alpha\beta$-7} & \textbf{MM-3} & \textbf{MM-5} & \textbf{MM-7} & \textbf{EM-3} & \textbf{EM-5} & \textbf{EM-7} \\ \hline
+\textbf{Random}       & -               & 34.9\%                & 31.94\%               & 34.38\%               & 25.0\%             & 30.21\%            & 19.25\%            & 68.75\%               & 47.92\%               & 63.02\%               \\ \hline
+\textbf{$\alpha\beta$-3} & 65.63\%         & -                     & 41.15\%               & 44.79\%               & 65.63\%            & 35.42\%            & 57.29\%            & 43.75\%               & 41.61\%               & 71.35\%               \\ \hline
+\textbf{$\alpha\beta$-5} & 64.06\%         & 59.9\%                & -                     & 43.75\%               & 60.94\%            & 56.02\%            & 50.0\%             & 67.19\%               & 53.13\%               & 52.6\%                \\ \hline
+\textbf{$\alpha\beta$-7} & 59.9\%          & 73.58\%               & 69.79\%               & -                     & 68.23\%            & 70.31\%            & 60.94\%            & 100.0\%               & 100.0\%               & 66.15\%               \\ \hline
+\textbf{MM-3}    & 45.31\%         & 37.44\%               & 27.6\%                & 26.04\%               & -                  & 42.19\%            & 0.0\%              & 71.35\%               & 68.64\%               & 79.57\%               \\ \hline
+\textbf{MM-5}    & 70.17\%         & 41.15\%               & 40.1\%                & 38.54\%               & 50.0\%             & -                  & 59.9\%             & 84.43\%               & 93.29\%               & 79.58\%               \\ \hline
+\textbf{MM-7}    & 86.87\%         & 40.1\%                & 45.31\%               & 34.38\%               & 86.98\%            & 66.3\%             & -                  & 97.95\%               & 100.0\%               & 96.27\%               \\ \hline
+\textbf{EM-3} & 30.57\%         & 44.79\%               & 33.85\%               & 24.48\%               & 5.17\%             & 30.21\%            & 31.58\%            & -                     & 52.6\%                & 49.48\%               \\ \hline
+\textbf{EM-5} & 26.56\%         & 41.67\%               & 45.31\%               & 32.81\%               & 40.1\%             & 20.45\%            & 5.06\%             & 72.92\%               & -                     & 55.21\%               \\ \hline
+\textbf{EM-7} & 36.98\%         & 41.67\%               & 43.23\%               & 35.94\%               & 29.17\%            & 13.58\%            & 0.0\%              & 51.83\%               & 55.21\%               & -                     \\ \hline
+\end{tabular}%
+}
+
+\caption{Percentage of Total Scores achieved and lost across Agents}
+\label{table2}
+\end{table}
+
+From Table \ref{table1} and Table \ref{table2}, we could deduce that the best performing algorithm was Alpha-Beta with depth 7, by sheer count of total number of wins, followed by Minimax. While Alpha-Beta, is just a variant of Minimax including pruning, the wins could be determined by the start move. One of the worst performers was Expectimax. The reason, as mentioned in Section \ref{3}, is that unlike minimax, Expectimax has chance nodes, which generally takes risks, and could end up at a lower utility state, which has happened in our experimentation as well. There are few wins which also proves that such risks taken by chance nodes, also sometimes lead up to a higher utility state.
+
+We also see the stacked-bar plot in Figure \ref{2}, comparing the log of time taken for each algorithm to make a move when played with other algorithms. We can see that \emph{Expectimax} with depth 7 took the highest time to finish the game. This is given by the Expectimax algorithm's inability to prune, thus making it slow. On the other hand, we were can see the benefits of pruning in Alpha-Beta algorithm. With depth 7, we see the Alpha-Beta is faster than Expectimax's depth 5. Random is the fastest, as seen in Figure \ref{2}, however it is because they're selected randomly without any search.
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.4]{img2.png}
+    \caption{Log of Time taken per move across different first agent, by the second agent}
+    \label{figure2}
+\end{figure}
 
 \section{Conclusion}\label{5}
 
+In this study, the evaluation of two-player game, Othello by different AI agents/ algorithms was investigated. We discussed the AI's role in computer games and how, while they have changed over the recent years, the implementation of intelligent search approach still continues to perform very well in board games like chess, checkers, Othello amongst others. We also discussed the state-of-the-art solutions for Othello, how a search AI agent implementation like this study, could set up the foundation for such novel ideas.
+While the study has been performed for several experiments over long duration, the authors still felt the number of games could be vastly increased than three. This, however was because of lack of access to powerful hardware during COVID-19. Moreover, games like Othello which are perfect information, deterministic, and zero sum game , leaves algorithm like Expectimax with chance nodes, weak. Especially, against players like Alpha-Beta or Minimax with depth 7 as the probability of taking risk becomes high over several moves and yet still Alpha-Beta/Minimax can make a best possible move for that current game state.
+The authors would like to mention the study has given an in-depth insight into how two-player games are made and how parameters like depth influences the difficulty level in a game. The study has also given us the importance of balancing performance for processing time, as in a computer game, humans would not necessarily wait for longer periods for computer to make a move.
 
 
 \begin{thebibliography}{6}
@@ -181,3 +240,4 @@ C. Frankland and N. Pillay, "Evolving game playing strategies for Othello," 2015
 T. S. Somasundaram, K. Panneerselvam, T. Bhuthapuri, H. Mahadevan and A. Jose, "Double Q–learning Agent for Othello Board Game," 2018 Tenth International Conference on Advanced Computing (ICoAC), Chennai, India, 2018, pp. 216-223.
 
 \end{thebibliography}
+\end{document}
